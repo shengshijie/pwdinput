@@ -36,7 +36,7 @@ class PwdInputDialog(private var activity: AppCompatActivity) : DialogFragment()
         val tvUser: TextView = view.findViewById(R.id.tv_user)
         tvUser.text = user
         tvResult = view.findViewById(R.id.tv_result)
-        keyboardView.bindTextView(pwdInputView)
+        keyboardView.bindTextView(pwdInputView) { dismiss() }
         pwdInputView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
