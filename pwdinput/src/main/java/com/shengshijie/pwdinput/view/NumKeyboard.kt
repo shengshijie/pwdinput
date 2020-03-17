@@ -58,8 +58,8 @@ class NumKeyboard : LinearLayout {
         rvKeyboard?.adapter = mAdapter
     }
 
-    fun bindTextView(textView: PwdInputView?,onEmptyClickDel: (()->Unit)?) {
-        mAdapter?.bindTextView(textView,onEmptyClickDel)
+    fun bindTextView(textView: PwdInputView?, onEmptyClickDel: () -> Unit) {
+        mAdapter?.bindTextView(textView, onEmptyClickDel)
     }
 
     private fun convertKeyBoardItem(): List<KeyBoardItem> {
@@ -79,9 +79,9 @@ class KeyboardAdapter(private val mContext: Context) : RecyclerView.Adapter<Recy
 
     private var mSelectedData: List<KeyBoardItem> = ArrayList()
     private var mPwdInputView: PwdInputView? = null
-    private var mOnClickDel: (()->Unit)? = null
+    private var mOnClickDel: () -> Unit = {}
 
-    fun bindTextView(pwdInputDialog: PwdInputView?,onEmptyClickDel: (()->Unit)?) {
+    fun bindTextView(pwdInputDialog: PwdInputView?, onEmptyClickDel: () -> Unit) {
         mPwdInputView = pwdInputDialog
         mOnClickDel = onEmptyClickDel
     }
@@ -131,7 +131,7 @@ class KeyboardAdapter(private val mContext: Context) : RecyclerView.Adapter<Recy
             is DelViewHolder -> {
                 holder.flRoot?.setOnClickListener {
                     if (mPwdInputView == null || mPwdInputView?.length() == 0) {
-                        mOnClickDel?.invoke()
+                        mOnClickDel()
                         return@setOnClickListener
                     }
                     mPwdInputView?.setText(mPwdInputView?.text?.subSequence(0, mPwdInputView!!.length() - 1))

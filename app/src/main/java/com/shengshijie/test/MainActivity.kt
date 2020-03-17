@@ -1,6 +1,7 @@
 package com.shengshijie.test
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.shengshijie.pwdinput.view.PwdInputDialog
@@ -16,7 +17,8 @@ class MainActivity : AppCompatActivity() {
                     .setMessage("请验证用户编号后6位")
                     .setPasswordLength(4)
                     .setUser("用户:张*")
-                    .setTextChangeListener { text, dialog ->
+                    .setOnDismiss { Log.e("DDD","AAA") }
+                    .setOnPwdInputComplete { text, dialog ->
                         if ("1234" == text) {
                             dialog.dismiss()
                         } else {

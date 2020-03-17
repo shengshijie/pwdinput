@@ -11,6 +11,7 @@ import com.shengshijie.pwdinput.R
 
 class PwdInputDialog(private var activity: AppCompatActivity) : DialogFragment() {
     private var onPwdInputComplete: (String, PwdInputDialog) -> Unit? = { _, _ -> }
+    private var onDismiss: () -> Unit? = {}
     private var title: String = ""
     private var message: String = ""
     private var user: String = ""
@@ -36,7 +37,10 @@ class PwdInputDialog(private var activity: AppCompatActivity) : DialogFragment()
         val tvUser: TextView = view.findViewById(R.id.tv_user)
         tvUser.text = user
         tvResult = view.findViewById(R.id.tv_result)
-        keyboardView.bindTextView(pwdInputView) { dismiss() }
+        keyboardView.bindTextView(pwdInputView) {
+            dismiss()
+            onDismiss()
+        }
         pwdInputView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
@@ -62,7 +66,12 @@ class PwdInputDialog(private var activity: AppCompatActivity) : DialogFragment()
         show(activity.supportFragmentManager, "")
     }
 
-    fun setTextChangeListener(onPwdInputComplete: (String, PwdInputDialog) -> Unit): PwdInputDialog {
+    fun setOnDismiss(onDismiss: () -> Unit): PwdInputDialog {
+        this.onDismiss = onDismiss
+        return this
+    }
+
+    fun setOnPwdInputComplete(onPwdInputComplete: (String, PwdInputDialog) -> Unit): PwdInputDialog {
         this.onPwdInputComplete = onPwdInputComplete
         return this
     }
