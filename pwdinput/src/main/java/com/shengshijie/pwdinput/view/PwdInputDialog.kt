@@ -21,6 +21,7 @@ class PwdInputDialog(private var activity: AppCompatActivity) : DialogFragment()
     private var length = 6
     private var tvResult: TextView? = null
     private var tvTimeout: Chronometer? = null
+    private var pwdInputView: PwdInputView? = null
     private var timeout: Int = 60
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,8 +34,8 @@ class PwdInputDialog(private var activity: AppCompatActivity) : DialogFragment()
         super.onViewCreated(view, savedInstanceState)
         dialog?.setCanceledOnTouchOutside(true)
         val keyboardView: NumKeyboard = view.findViewById(R.id.keyboardView)
-        val pwdInputView: PwdInputView = view.findViewById(R.id.passwordInputView)
-        pwdInputView.passwordLength = length
+         pwdInputView = view.findViewById(R.id.passwordInputView)
+        pwdInputView?.passwordLength = length
         val tvTitle: TextView = view.findViewById(R.id.tv_title)
         tvTitle.text = title
         tvTimeout = view.findViewById(R.id.tv_timeout)
@@ -54,17 +55,21 @@ class PwdInputDialog(private var activity: AppCompatActivity) : DialogFragment()
             dismiss()
             onDismissListener()
         }
-        pwdInputView.addTextChangedListener(object : TextWatcher {
+        pwdInputView?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun afterTextChanged(editable: Editable) {
-                if (editable.toString().length == pwdInputView.passwordLength) {
+                if (editable.toString().length == pwdInputView?.passwordLength) {
                     onPwdInputComplete(editable.toString(), this@PwdInputDialog)
                 } else {
                     tvResult?.text = ""
                 }
             }
         })
+    }
+
+    fun clearText() {
+        pwdInputView?.setText("")
     }
 
     private fun onTimeout() {

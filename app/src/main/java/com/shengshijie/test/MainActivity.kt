@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                                 Toast.makeText(this, "验证次数已达上限", Toast.LENGTH_SHORT).show()
                                 return@setOnPwdInputComplete
                             }
+                            dialog.clearText()
                             verifyTime--
                             dialog.setResult("验证失败,剩余验证次数:$verifyTime")
                         }
